@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,10 +27,11 @@ public class MainFrame extends JFrame {
 	private JTextField campoTexto2;
 	private JButton buscar;
 	private HashMap<String, String> map ;
+	private JCheckBox check;
 	
 	public MainFrame(HashMap<String, String> hash) {
 		
-		
+		check = new JCheckBox("Buscar Por valor");
 		map = hash;
 		setSize(400, 400);
 		setLocation(400, 400);
@@ -37,6 +40,8 @@ public class MainFrame extends JFrame {
 		campoTexto = new JTextField(20);
 		campoTexto2 = new JTextField(20);
 		buscar = new JButton("Buscar");
+		
+		
 		campoTexto.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -54,7 +59,8 @@ public class MainFrame extends JFrame {
 			public void keyPressed(KeyEvent arg0) {
 				int keyCode = arg0.getKeyCode();
 				if(keyCode == 10){
-					buscar();
+					Entry<String, String> buscarPorValor = buscarPorValor(campoTexto.getText().trim());
+					buscar(buscarPorValor);
 				}
 				
 			}
@@ -63,18 +69,21 @@ public class MainFrame extends JFrame {
 		panelPrincipal.add(campoTexto);
 		panelPrincipal.add(buscar);
 		panelPrincipal.add(campoTexto2);
+		panelPrincipal.add(check);
 		
 		
 		buscar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buscar();
-				
+				Entry<String, String> buscarPorValor = buscarPorValor(campoTexto.getText().trim());
+				buscar(buscarPorValor);
 				
 				
 				
 			}
+
+		
 
 		
 		});
@@ -84,29 +93,55 @@ public class MainFrame extends JFrame {
 	
 	
 	
-	private void buscar(){
-		String buscarPalabra = buscarPalabra(campoTexto.getText().trim());
+	private void buscar(Entry<String, String> entry){
 		
-		if (buscarPalabra.equals("")){
+		if (entry == null){
 			JOptionPane.showMessageDialog(null, "No se encontro abreviatura");
 		}else {
 			campoTexto.setText("");
-			campoTexto2.setText(buscarPalabra);
+			if(check.isSelected()){
+			campoTexto2.setText(entry.getKey());
+			}else{
+			campoTexto2.setText(entry.getValue());
+			}
 			
 		}
 		
 		
 	}
 	
-	private String buscarPalabra(String text) {
+	
+	private Entry<String, String> buscarPorValor(String buscarPalabra) {
 		
-		Set<String> keySet = map.keySet();
 		
-		for (String string : keySet) {
-			if (string.trim().toLowerCase().equals(text.toLowerCase())){
-				return map.get(string);
+		Set<Entry<String, String>> entrySet = map.entrySet();
+		
+		for (Entry<String, String> entry : entrySet) {
+			
+			if(check.isSelected()){
+				
+				String value = entry.getValue();
+				if(value.trim().toLowerCase().equals(buscarPalabra.trim().toLowerCase())){
+					return entry;
+				}
+				
+				
+			}else{
+				
+				String key = entry.getKey();
+				if(key.trim().toLowerCase().equals(buscarPalabra.trim().toLowerCase())){
+					return entry;
+				}
+				
 			}
+			
 		}
-		return "";
+		return null;
+		
+		
+		
+
+		
 	}
+	
 }
