@@ -1,14 +1,11 @@
 package ar.com.hasmap;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import ar.com.hasmap.vista.MainFrame;
@@ -45,7 +42,6 @@ public class Inicio extends JFrame {
 
 		try {
 			
-			String s2 = "";
 
 			// Cargamos el buffer con el contenido del archivo
 			BufferedReader br;

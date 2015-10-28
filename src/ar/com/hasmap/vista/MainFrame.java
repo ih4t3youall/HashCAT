@@ -8,8 +8,6 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
