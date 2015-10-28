@@ -3,9 +3,10 @@ package ar.com.hasmap;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,16 +21,12 @@ public class Inicio extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public Inicio() {
-
-		File file = new File("clave_valor.txt");
-		if(!file.exists()){
-		JFileChooser jfc = new JFileChooser();
-		jfc.showOpenDialog(this);
-		 file = jfc.getSelectedFile();
-		}
 		
-//		HashMap<String, String> hash = getHash(file.getAbsolutePath());
-		HashMap<String, String> hash = getHash(file.getAbsolutePath());
+
+	
+		
+		
+		HashMap<String, String> hash = getHash();
 		for( Map.Entry<String, String> entry :hash.entrySet()){
 			System.out.println("clave: "+entry.getKey());
 			System.out.println("valor: "+entry.getValue());
@@ -41,7 +38,7 @@ public class Inicio extends JFrame {
 
 	}
 
-	public HashMap<String, String> getHash(String path){
+	public HashMap<String, String> getHash(){
 		HashMap<String, String> hash = new HashMap<String, String>();
 		String primera = "";
 		String ultima = "";
@@ -52,9 +49,15 @@ public class Inicio extends JFrame {
 
 			// Cargamos el buffer con el contenido del archivo
 			BufferedReader br;
-			br = new BufferedReader(new FileReader(path));
+			InputStream in = getClass().getResourceAsStream("clave_valor.txt"); 
+			
+			br = new BufferedReader(new InputStreamReader(in));
 
 			// Leemos la primera linea
+			
+		        
+
+			
 			String line = br.readLine();
 			int blanco = 0;
 			String palabra="";
