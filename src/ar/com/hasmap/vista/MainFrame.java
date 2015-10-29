@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
 		panelPrincipal.setLayout(new FlowLayout());
 		campoTexto = new JTextField(20);
 		campoTexto2 = new JTextField(20);
-		campoTexto2.setEnabled(false);
+		campoTexto2.setEditable(false);
 		buscar = new JButton("Buscar");
 		
 		
